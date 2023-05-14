@@ -1,0 +1,61 @@
+##KMEANS CLUSTERING
+
+import pandas as pd
+import numpy as np
+import matplotlib as plt
+df = pd.read_csv('K-means.csv')
+df
+for i in range(0,25):
+    df['cluster 1(6)'] = df['Age'] - 6
+	
+for i in range(0,25):
+    df['Cluster 2 (1)'] = df['Age'] - 1
+	
+for i in range(0,25):
+    df['cluster 3 (10)'] = df['Age'] - 10
+
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler	
+scaled_df = StandardScaler().fit_transform(df)
+kmeans_kwargs = {
+"init": "random",
+"n_init": 10,
+"random_state": 1,
+}
+
+
+kmeans = KMeans(init="random", n_clusters=3, n_init=10, random_state=1)
+
+kmeans.fit(scaled_df)
+kmeans.labels_
+
+
+##PCA
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_breast_cancer
+cancer_data = load_breast_cancer()
+cancer_data.keys()
+print(cancer_data['DESCR'])
+df=pd.DataFrame(cancer_data['data'],columns=cancer_data['feature_names'])
+df.head()
+df.isnull().sum()
+from sklearn.preprocessing import MinMaxScaler
+min_max_scaler = MinMaxScaler()
+min_max_scaler.fit(df)
+minmax_scaled_data=min_max_scaler.transform(df)
+minmax_scaled_data[:1,:]
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+scaler.fit(df)
+df.head()
+scaled_data=scaler.transform(df)
+
+from sklearn.decomposition import PCA
+pca2=PCA(n_components = 2)
+pca2= pca2.fit(minmax_scaled_data)
+x_pca2=pca2.transform(minmax_scaled_data)
+minmax_scaled_data.shape
+x_pca2.shape
